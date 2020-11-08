@@ -1,31 +1,30 @@
-<!--
-# interpolation ==> {{ expression }}
-# one way data data binding ==> [prop]
-# two way data binding ==> [(ngModel)]
-# html data binding => [innerHTML]
-# getter function ==> get myFunc(){ return }
-# setter ==> func()
+<!---
+  # condition
+    # *ngIf/elseIf/else,
+    # *ngHide/show
+    # *ngSwitch/Case,
+    # *ngFor
+  # create components
+    # ng g c folders/name
+  # @Input
+  # @Output
+  - Dynamic components
 -->
 
-
-interpolation
-<div> {{ title }}</div> <br/>
-<div>{{ title + ' sutin' + ' initt' }}</div> <br />
+<!--
 <div>
-  {{ name }}
-</div> <br />
-one way data binding <br>
-<input [value]="title" /> <br /><br/>
-two way data binding <br />
-<input type="text" [(ngModel)]="title" /> <br />
-
-<div [innerHTML]="myHtml"></div>
-<input type="text" value="sutin" #myName/>
-<button (click)="buttonClick(myName.value)">Click</button> <br />
-<div class="name">
-  <div>
-    Name: <div class=label>{{ getName }}</div>
-  </div>
-
+  <h1>Parent</h1>
+  <div>{{ title }}</div>
+  <div>Value: {{ valueFromChild }}</div>
 </div>
-
+<div>
+  <h1>Child</h1>
+  <app-hello
+    [title]="title"
+    [name]="name"
+    (clicked)="onClickEvt($event)">
+  </app-hello>
+</div>
+-->
+<h5>Dynamic Components</h5>
+<ng-template appContainer></ng-template>

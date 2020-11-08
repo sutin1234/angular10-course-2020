@@ -1,34 +1,62 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewContainerRef, OnInit, ViewChild } from '@angular/core';
+import { HiComponent } from './components/dynamic/hi/hi.component';
+import { WelcomeComponent } from './components/dynamic/welcome/welcome.component';
+import { HelloComponent } from './components/hello/hello.component';
+import { ContainerDirective } from './directives/container.directive';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  public title: string;
-  public name: string;
-  public myHtml: string;
-  public myGetterName: string;
+  title = 'Angular 10';
+  isLogin = true;
+  hasUser = true;
+  number = 3;
+  osList = ['Window10', 'MacOSX', 'Linux'];
+  name = 'Hello';
+  valueFromChild = '';
+  @ViewChild(ContainerDirective, { static: true }) container: ContainerDirective;
 
+  constructor(
+    private cfr: ComponentFactoryResolver,
+    private vcr: ViewContainerRef
+  ) { }
 
-  public ngOnInit(): void {
-    this.title = 'data binding';
-    this.name = `${this.title} sutin injitt`;
-    this.myHtml = '<h4> Angular10 data binding</h4>';
-    this.myGetterName = 'myGetter Sutin';
+  ngOnInit(): void {
+    // this.loadComponentLogic();
+    // this.loadMultiComponent();
+    this.loadComponentWithDirective();
   }
 
-  get getName(): string {
-    return this.myGetterName;
+  onClickEvt(value: string): void {
+    console.log('clicked ', value);
+    this.valueFromChild = value;
   }
 
-  // tslint:disable-next-line: typedef
-  setName(name: string): void {
-    this.myGetterName = name;
+  loadComponentLogic(): void {
+    const isComponent = this.isLogin ? HiComponent : WelcomeComponent;
+    const componentFactory = this.cfr.resolveComponentFactory(isComponent);
+    this.vcr.createComponent(componentFactory);
+  }
+  loadMultiComponent(): void {
+    const componentList = [HiComponent, WelcomeComponent];
+    componentList.forEach(com => {
+      const componentFactory = this.cfr.resolveComponentFactory(com);
+      this.vcr.createComponent(componentFactory);
+    });
   }
 
-  // tslint:disable-next-line: typedef
-  buttonClick(value: string) {
-    this.setName(value);
+  loadComponentWithDirective(): void {
+    const viewContainerRef = this.container.viewContainerRef;
+    viewContainerRef.clear();
+
+    const isComponent = this.isLogin ? HiComponent : WelcomeComponent;
+    const componentFactory = this.cfr.resolveComponentFactory(isComponent);
+    const componentRef = viewContainerRef.createComponent(componentFactory);
+    if (componentRef.instance.constructor === HiComponent) {
+      (componentRef.instance as HiComponent).data = this.osList;
+    }
+
   }
 }
