@@ -8,6 +8,7 @@ import { HelloComponent } from './components/hello/hello.component';
 import { HiComponent } from './components/dynamic/hi/hi.component';
 import { WelcomeComponent } from './components/dynamic/welcome/welcome.component';
 import { ContainerDirective } from './directives/container.directive';
+import { MyDirectiveDirective } from './directives/my-directive.directive';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ContainerDirective } from './directives/container.directive';
     HelloComponent,
     HiComponent,
     WelcomeComponent,
-    ContainerDirective
+    ContainerDirective,
+    MyDirectiveDirective
   ],
   imports: [
     BrowserModule,

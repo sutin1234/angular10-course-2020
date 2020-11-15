@@ -8,7 +8,7 @@ import { ContainerDirective } from './directives/container.directive';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Angular 10';
   isLogin = true;
   hasUser = true;
@@ -17,6 +17,19 @@ export class AppComponent implements OnInit{
   name = 'Hello';
   valueFromChild = '';
   @ViewChild(ContainerDirective, { static: true }) container: ContainerDirective;
+  isHide = true;
+  defaultColor = 'green';
+  hoverColor = 'red';
+  colorOptions = {
+    defaultColor: 'blue',
+    hoverColor: 'pink'
+  };
+
+
+
+
+
+
 
   constructor(
     private cfr: ComponentFactoryResolver,
@@ -26,7 +39,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     // this.loadComponentLogic();
     // this.loadMultiComponent();
-    this.loadComponentWithDirective();
+    // this.loadComponentWithDirective();
   }
 
   onClickEvt(value: string): void {
